@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-common-service
+spec:
+  selector:
+    app: common-service
+  type: NodePort
+  ports:
+    - port: 3500
+      targetPort: 3500
+      nodePort: 31000
