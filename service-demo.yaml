@@ -1,12 +1,60 @@
 apiVersion: v1
 kind: Service
 metadata:
+  name: hello-user-service
+spec:
+  selector:
+    app: user-service
+  type: ClusterIP
+  ports:
+    - port: 3100
+      targetPort: 3100
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-customer-service
+spec:
+  selector:
+    app: customer-service
+  type: ClusterIP
+  ports:
+    - port: 3200
+      targetPort: 3200
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-seller-service
+spec:
+  selector:
+    app: seller-service
+  type: ClusterIP
+  ports:
+    - port: 3300
+      targetPort: 3300
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-admin-service
+spec:
+  selector:
+    app: admin-service
+  type: ClusterIP
+  ports:
+    - port: 3400
+      targetPort: 3400
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: hello-common-service
 spec:
   selector:
     app: common-service
-  type: NodePort
+  type: ClusterIP
   ports:
     - port: 3500
       targetPort: 3500
-      nodePort: 31000
+

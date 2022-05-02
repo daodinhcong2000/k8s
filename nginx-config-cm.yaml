@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+  my-nginx-config.conf: |
+    server {
+      listen 80;
+      listen [::]:80;
+      location / {
+        root /usr/share/nginx/html;
+        try_files $uri /index.html;
+      }
+
+      # node api reverse proxy
+      location /user-service/ {
+        proxy_pass http://hello-user-service:3100/;
+        proxy_set_header X-Real-IP $remote_addr;
+      }
+
+      location /customer-service/ {
+        proxy_pass http://hello-customer-service:3200/;
+        proxy_set_header X-Real-IP $remote_addr;
+      }
+
+      location /seller-service/ {
+        proxy_pass http://hello-seller-service:3300/;
+        proxy_set_header X-Real-IP $remote_addr;
+      }
+
+      location /admin-service/ {
+        proxy_pass http://hello-admin-service:3400/;
+        proxy_set_header X-Real-IP $remote_addr;
+      }
+
+      location /common-service/ {
+        proxy_pass http://hello-common-service:3500/;
+        proxy_set_header X-Real-IP $remote_addr;
+      }
+
+      location /statistics-service/ {
+        proxy_pass https://www.google.com.vn/;
+        proxy_set_header X-Real-IP $remote_addr;
+      }
+    }

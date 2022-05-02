@@ -1,20 +1,44 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: minimal-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+  name: simple-fanout-example
 spec:
-  ingressClassName: nginx-example
   rules:
-  - host: ddcong.test
-    http:
+  - http:
       paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: hello-user-service
+            port:
+              number: 3100
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: hello-customer-service
+            port:
+              number: 3200
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: hello-seller-service
+            port:
+              number: 3300
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: hello-admin-service
+            port:
+              number: 3400
       - path: /
         pathType: Prefix
         backend:
           service:
             name: hello-common-service
             port:
-              number: 80
+              number: 3500
 

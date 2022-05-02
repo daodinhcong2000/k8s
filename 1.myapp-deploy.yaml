@@ -2,11 +2,164 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   # tên của deployment
+  name: user-service
+spec:
+  # thiết lập các POD do deploy quản lý, là POD có nhãn  "app=deployapp"
+  selector:
+    matchLabels:
+      app: user-service
+
+  # Định nghĩa mẫu POD, khi cần Deploy sử dụng mẫu này để tạo Pod
+  template:
+    metadata:
+      name: pod-user-service
+      labels:
+        app: user-service
+    spec:
+      containers:
+      - name: node-user-service
+        image: daodinhcong2000/user-service:v2
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        ports:
+          - containerPort: 3100
+        readinessProbe:
+          tcpSocket:
+            port: 3100
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 3100
+          initialDelaySeconds: 15
+          periodSeconds: 20
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # tên của deployment
+  name: customer-service
+spec:
+  # thiết lập các POD do deploy quản lý, là POD có nhãn  "app=deployapp"
+  selector:
+    matchLabels:
+      app: customer-service
+
+  # Định nghĩa mẫu POD, khi cần Deploy sử dụng mẫu này để tạo Pod
+  template:
+    metadata:
+      name: pod-customer-service
+      labels:
+        app: customer-service
+    spec:
+      containers:
+      - name: node-customer-service
+        image: daodinhcong2000/customer-service:v1
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        ports:
+          - containerPort: 3200
+        readinessProbe:
+          tcpSocket:
+            port: 3200
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 3200
+          initialDelaySeconds: 15
+          periodSeconds: 20
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # tên của deployment
+  name: seller-service
+spec:
+  # thiết lập các POD do deploy quản lý, là POD có nhãn  "app=deployapp"
+  selector:
+    matchLabels:
+      app: seller-service
+
+  # Định nghĩa mẫu POD, khi cần Deploy sử dụng mẫu này để tạo Pod
+  template:
+    metadata:
+      name: pod-seller-service
+      labels:
+        app: seller-service
+    spec:
+      containers:
+      - name: node-seller-service
+        image: daodinhcong2000/seller-service:v1
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        ports:
+          - containerPort: 3300
+        readinessProbe:
+          tcpSocket:
+            port: 3300
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 3300
+          initialDelaySeconds: 15
+          periodSeconds: 20
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # tên của deployment
+  name: admin-service
+spec:
+  # thiết lập các POD do deploy quản lý, là POD có nhãn  "app=deployapp"
+  selector:
+    matchLabels:
+      app: admin-service
+
+  # Định nghĩa mẫu POD, khi cần Deploy sử dụng mẫu này để tạo Pod
+  template:
+    metadata:
+      name: pod-admin-service
+      labels:
+        app: admin-service
+    spec:
+      containers:
+      - name: node-admin-service
+        image: daodinhcong2000/admin-service:v1
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        ports:
+          - containerPort: 3400
+        readinessProbe:
+          tcpSocket:
+            port: 3400
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 3400
+          initialDelaySeconds: 15
+          periodSeconds: 20
+          
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # tên của deployment
   name: common-service
 spec:
-  # số POD tạo ra
-  replicas: 2
-
   # thiết lập các POD do deploy quản lý, là POD có nhãn  "app=deployapp"
   selector:
     matchLabels:
@@ -28,3 +181,14 @@ spec:
             cpu: "100m"
         ports:
           - containerPort: 3500
+        readinessProbe:
+          tcpSocket:
+            port: 3500
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 3500
+          initialDelaySeconds: 15
+          periodSeconds: 20
+
