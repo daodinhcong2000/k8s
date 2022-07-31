@@ -1,0 +1,69 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: frontend-pdb
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: frontend
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: user-service-pdb
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: user-service
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: customer-service-pdb
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: customer-service
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: seller-service-pdb
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: seller-service
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: admin-service-pdb
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: admin-service
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: common-service-pdb
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: common-service
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: statistics-service-pdb
+spec:
+  minAvailable: 0
+  selector:
+    matchLabels:
+      app: statistics-service

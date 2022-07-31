@@ -4,25 +4,29 @@ metadata:
   # tên của deployment
   name: user-service
 spec:
-  # thiết lập các POD do deploy quản lý, là POD có nhãn  "app=deployapp"
   selector:
     matchLabels:
       app: user-service
-
   # Định nghĩa mẫu POD, khi cần Deploy sử dụng mẫu này để tạo Pod
   template:
     metadata:
       name: pod-user-service
       labels:
         app: user-service
+      annotations:
+        cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
     spec:
       containers:
       - name: node-user-service
-        image: daodinhcong2000/user-service:v2
+        image: daodinhcong2000/user-service:latest
+        imagePullPolicy: "Always"
         resources:
+          requests:
+            cpu: "100m"
+            memory: "64Mi"
           limits:
             memory: "128Mi"
-            cpu: "100m"
+            cpu: "200m"
         ports:
           - containerPort: 3100
         readinessProbe:
@@ -54,14 +58,20 @@ spec:
       name: pod-customer-service
       labels:
         app: customer-service
+      annotations:
+        cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
     spec:
       containers:
       - name: node-customer-service
-        image: daodinhcong2000/customer-service:v1
+        image: daodinhcong2000/customer-service:latest
+        imagePullPolicy: "Always"
         resources:
+          requests:
+            cpu: "100m"
+            memory: "64Mi"
           limits:
             memory: "128Mi"
-            cpu: "100m"
+            cpu: "200m"
         ports:
           - containerPort: 3200
         readinessProbe:
@@ -86,21 +96,26 @@ spec:
   selector:
     matchLabels:
       app: seller-service
-
   # Định nghĩa mẫu POD, khi cần Deploy sử dụng mẫu này để tạo Pod
   template:
     metadata:
       name: pod-seller-service
       labels:
         app: seller-service
+      annotations:
+        cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
     spec:
       containers:
       - name: node-seller-service
-        image: daodinhcong2000/seller-service:v1
+        image: daodinhcong2000/seller-service:latest
+        imagePullPolicy: "Always"
         resources:
+          requests:
+            cpu: "100m"
+            memory: "64Mi"
           limits:
             memory: "128Mi"
-            cpu: "100m"
+            cpu: "200m"
         ports:
           - containerPort: 3300
         readinessProbe:
@@ -125,21 +140,26 @@ spec:
   selector:
     matchLabels:
       app: admin-service
-
   # Định nghĩa mẫu POD, khi cần Deploy sử dụng mẫu này để tạo Pod
   template:
     metadata:
       name: pod-admin-service
       labels:
         app: admin-service
+      annotations:
+        cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
     spec:
       containers:
       - name: node-admin-service
-        image: daodinhcong2000/admin-service:v1
+        image: daodinhcong2000/admin-service:latest
+        imagePullPolicy: "Always"
         resources:
+          requests:
+            cpu: "100m"
+            memory: "64Mi"
           limits:
             memory: "128Mi"
-            cpu: "100m"
+            cpu: "200m"
         ports:
           - containerPort: 3400
         readinessProbe:
@@ -164,21 +184,23 @@ spec:
   selector:
     matchLabels:
       app: common-service
-
   # Định nghĩa mẫu POD, khi cần Deploy sử dụng mẫu này để tạo Pod
   template:
     metadata:
       name: pod-common-service
       labels:
         app: common-service
+      annotations:
+        cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
     spec:
       containers:
       - name: node-common-service
-        image: daodinhcong2000/common-service:v2
+        image: daodinhcong2000/common-service:latest
+        imagePullPolicy: "Always"
         resources:
           limits:
             memory: "128Mi"
-            cpu: "100m"
+            cpu: "200m"
         ports:
           - containerPort: 3500
         readinessProbe:
@@ -192,3 +214,46 @@ spec:
           initialDelaySeconds: 15
           periodSeconds: 20
 
+---
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    # tên của deployment
+    name: statistics-service
+  spec:
+    # thiết lập các POD do deploy quản lý, là POD có nhãn  "app=deployapp"
+    selector:
+      matchLabels:
+        app: statistics-service
+    # Định nghĩa mẫu POD, khi cần Deploy sử dụng mẫu này để tạo Pod
+    template:
+      metadata:
+        name: pod-statistics-service
+        labels:
+          app: statistics-service
+        annotations:
+          cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+      spec:
+        containers:
+        - name: node-statistics-service
+          image: daodinhcong2000/statistics-service:latest
+          imagePullPolicy: "Always"
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
+          ports:
+            - containerPort: 3600
+          readinessProbe:
+            tcpSocket:
+              port: 3600
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 3600
+            initialDelaySeconds: 15
+            periodSeconds: 20

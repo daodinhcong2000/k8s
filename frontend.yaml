@@ -12,11 +12,12 @@ spec:
         app: frontend
       annotations:
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
+        cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
     spec:
       serviceAccountName: default
       containers:
         - name: fe-container
-          image: daodinhcong2000/frontend:gcp
+          image: daodinhcong2000/frontend:latest
           volumeMounts:
             - mountPath: /etc/nginx/conf.d # mount content of the configmap to container
               name: config
