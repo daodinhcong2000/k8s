@@ -29,6 +29,9 @@ spec:
             cpu: "200m"
         ports:
           - containerPort: 3100
+        envFrom:
+          - configMapRef:
+              name: database-c-ecommerce-config
         readinessProbe:
           tcpSocket:
             port: 3100
@@ -74,6 +77,9 @@ spec:
             cpu: "200m"
         ports:
           - containerPort: 3200
+        envFrom:
+          - configMapRef:
+              name: database-c-ecommerce-config
         readinessProbe:
           tcpSocket:
             port: 3200
@@ -89,14 +95,11 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  # tên của deployment
   name: seller-service
 spec:
-  # thiết lập các POD do deploy quản lý, là POD có nhãn  "app=deployapp"
   selector:
     matchLabels:
       app: seller-service
-  # Định nghĩa mẫu POD, khi cần Deploy sử dụng mẫu này để tạo Pod
   template:
     metadata:
       name: pod-seller-service
@@ -118,6 +121,9 @@ spec:
             cpu: "200m"
         ports:
           - containerPort: 3300
+        envFrom:
+          - configMapRef:
+              name: database-c-ecommerce-config
         readinessProbe:
           tcpSocket:
             port: 3300
@@ -162,6 +168,9 @@ spec:
             cpu: "200m"
         ports:
           - containerPort: 3400
+        envFrom:
+          - configMapRef:
+              name: database-c-ecommerce-config
         readinessProbe:
           tcpSocket:
             port: 3400
@@ -203,6 +212,9 @@ spec:
             cpu: "200m"
         ports:
           - containerPort: 3500
+        envFrom:
+          - configMapRef:
+              name: database-c-ecommerce-config
         readinessProbe:
           tcpSocket:
             port: 3500
@@ -247,6 +259,9 @@ spec:
               cpu: "200m"
           ports:
             - containerPort: 3600
+          envFrom:
+            - configMapRef:
+                name: database-c-ecommerce-config
           readinessProbe:
             tcpSocket:
               port: 3600

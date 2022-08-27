@@ -14,8 +14,16 @@
 - Step 5: clone repo from git hub.
 - Step 6: run command to start
     ```
-    k apply -f 1.myapp-deploy.yaml
+    k apply -f config-map-ecommerce.yaml
     k apply -f nginx-config-cm.yaml
+    k apply -f 1.myapp-deploy.yaml
     k apply -f service-demo.yaml
+    
+    #If you wanted autoscale pod and node in GCP, run:
     k apply -f HPA-ecommerce.yaml
+    k apply -f PDB-ecommerce.yaml
+    ```
+- Note: Test autosacle - scale up : run
+    ```
+    k apply -f test.yaml
     ```
